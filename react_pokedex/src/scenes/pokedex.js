@@ -1,6 +1,9 @@
-import React from "react";
-import { AppBar, Toolbar, Grid, Card, CardContent } from '@material-ui/core';
+import React, { useState } from "react";
+import { AppBar, Toolbar, Grid, Card, CardContent, CardMedia, CircularProgress, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { toFirstCharUppercase } from "../constants";
+import MockData from "../mockData";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
     pokedexContainer: {
@@ -8,35 +11,62 @@ const useStyles = makeStyles({
         paddingLeft: "50px",
         paddingRight: "50px"
     },
+
+    cardMedia: {
+        margin: "auto"
+    },
+
+    cardContent: {
+        textAlign: "center"
+    },
 });
-
-const getPokemonCards = () => {
-    return (
-        <Grid item xs={4}>
-            <Card>
-                <CardContent>
-                    hi
-                </CardContent>
-            </Card>
-        </Grid>
-    )
-}
-
 
 const Pokedex = () => {
     const classes = useStyles();
+    const navigate = useNavigate();
+    const [pokemonData, setPokemonData] = useState(MockData);
+
+    const getPokemonCards = (pokemonId) => {
+        console.log(pokemonData[`${pokemonId}`])
+        const { id, name } = pokemonData[pokemonId];
+        const sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+        return (
+            <Grid item xs={4} key={pokemonId}>
+                <Card onClick={() => navigate(`/${pokemonId}`, {id: pokemonId})}>
+                    <CardMedia
+                        className={classes.cardMedia}
+                        image={sprite}
+                        style={{ width: "130px", height: "130px" }}
+                    />
+                    <CardContent className={classes.cardContent}>
+                        <Typography>{`${id}. ${toFirstCharUppercase(name)}`}</Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+        )
+    }
+
     return (
         <>
             <AppBar position="static">
                 <Toolbar />
             </AppBar>
-            <Grid container spacing={2} className={classes.pokedexContainer}>
-                {getPokemonCards()}
-                {getPokemonCards()}
-                {getPokemonCards()}
-                {getPokemonCards()}
-                {getPokemonCards()}
-            </Grid>
+            {
+                pokemonData
+                    ?
+                    (
+                        <Grid container spacing={2} className={classes.pokedexContainer}>
+                            {
+                                Object.keys(pokemonData).map(pokemonId => getPokemonCards(pokemonId))
+                            }
+                        </Grid>
+                    )
+                    :
+                    (
+                        <CircularProgress />
+                    )
+            }
+
         </>
     )
 }

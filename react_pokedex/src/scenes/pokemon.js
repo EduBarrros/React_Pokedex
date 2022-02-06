@@ -1,9 +1,14 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-const Pokemon = (props) => {
+const Pokemon = () => {
+
+    const id  = useLocation();
+
+    console.log(id)
     return(
         <div>
-            {`Essa é a pagina do Pokemon de número: ${props.pokemonId}`}
+            {`Essa é a pagina do Pokemon de número: ${id}`}
         </div>
     )
 }
