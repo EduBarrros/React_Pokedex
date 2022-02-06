@@ -32,7 +32,7 @@ const Pokedex = () => {
         const sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
         return (
             <Grid item xs={4} key={pokemonId}>
-                <Card onClick={() => navigate(`/${pokemonId}`, {id: pokemonId})}>
+                <Card onClick={() => navigate(`/${pokemonId}`)}>
                     <CardMedia
                         className={classes.cardMedia}
                         image={sprite}

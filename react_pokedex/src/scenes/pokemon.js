@@ -1,14 +1,14 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Pokemon = () => {
 
-    const id  = useLocation();
+    const pokemonId  = useParams();
 
-    console.log(id)
+    console.log(pokemonId)
     return(
         <div>
-            {`Essa é a pagina do Pokemon de número: ${id}`}
+            {`Essa é a pagina do Pokemon de número: ${pokemonId.pokemonId}`}
         </div>
     )
 }
