@@ -5,6 +5,7 @@ import { toFirstCharUppercase } from "../constants";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SearchRounded } from "@material-ui/icons";
+import Pokedex_Title from '../assets/Pokedex_Title.svg';
 
 const useStyles = makeStyles((theme) => ({
     pokedexContainer: {
@@ -23,11 +24,13 @@ const useStyles = makeStyles((theme) => ({
 
     searchContainer: {
         display: "flex",
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        backgroundColor: alpha(theme.palette.common.white, 0.50),
         paddingLeft: "20px",
         paddingRight: "20px",
         marginTop: "5px",
         marginBottom: "5px",
+        borderRadius: "10px",
+        marginLeft: "20px"
     },
 
     searchIcon: {
@@ -36,9 +39,15 @@ const useStyles = makeStyles((theme) => ({
     },
 
     searchInput: {
-        width: "200px",
+        width: "150px",
         margin: "5px",
     },
+
+    title: {
+        margin: "auto",
+        width: "650px"
+    }
+
 }));
 
 const Pokedex = () => {
@@ -74,7 +83,7 @@ const Pokedex = () => {
         console.log(pokemonData[`${pokemonId}`])
         const { id, name, sprite } = pokemonData[pokemonId];
         return (
-            <Grid item xs={4} key={pokemonId}>
+            <Grid item xs={3} key={pokemonId}>
                 <Card onClick={() => navigate(`/${pokemonId}`)}>
                     <CardMedia
                         className={classes.cardMedia}
@@ -101,6 +110,9 @@ const Pokedex = () => {
                             label="Pokemon"
                             variant="standard"
                         />
+                    </div>
+                    <div className={classes.title}>
+                        <img src={Pokedex_Title} />
                     </div>
                 </Toolbar>
             </AppBar>
